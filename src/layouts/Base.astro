@@ -3,6 +3,7 @@ import '../styles/global.css';
 const { title = 'Gedanken zu Bitcoin', description = 'Ein persönliches Gedankenjournal über Geld, Freiheit und die Fragen dazwischen.' } = Astro.props;
 const currentPath = Astro.url.pathname;
 const nav = [{href:'/',label:'Start'},{href:'/gedanken/',label:'Gedanken'},{href:'/essays/',label:'Essays'},{href:'/ueber/',label:'Über das Journal'}];
+const projects=[{name:'Selbstverwahrung',url:'https://selbstverwahrung.de/'},{name:'Das Bitcoin-Buch',url:'https://das-bitcoin-buch.de/'},{name:'Bitcoin-Knoten',url:'https://bitcoin-knoten.de/'},{name:'Gedanken zu Bitcoin',url:'https://gedanken-zu-bitcoin.de/'}];
 ---
 <!doctype html>
 <html lang="de"><head>
@@ -17,5 +18,9 @@ const nav = [{href:'/',label:'Start'},{href:'/gedanken/',label:'Gedanken'},{href
 <a href="/" class="brand" aria-label="Gedanken zu Bitcoin – Startseite">Gedanken zu Bitcoin<span class="brand-dot">.</span><small>Geld. Freiheit. Fragen.</small></a>
 <nav aria-label="Hauptnavigation">{nav.map(n => <a href={n.href} aria-current={currentPath === n.href ? 'page' : undefined}>{n.label}</a>)}</nav>
 </header><main id="inhalt"><slot /></main>
-<footer class="footer"><p>Gedanken zu Bitcoin · Ein persönliches Journal</p><div><a href="/ueber/">Über das Journal</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></div></footer></div>
+<footer class="footer network-footer">
+<div class="footer-about"><strong>Gedanken zu Bitcoin.</strong><p>Über Geld, Freiheit und die Fragen dazwischen.</p></div>
+<nav aria-label="Unsere Projekte" class="footer-projects"><strong>Unsere Projekte</strong>{projects.map(p=><a href={p.url} aria-current={p.name==='Gedanken zu Bitcoin'?'page':undefined}>{p.name}</a>)}</nav>
+<nav aria-label="Rechtliches" class="footer-legal"><strong>Rechtliches</strong><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></nav>
+</footer></div>
 </body></html>
