@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';import EntryCard from '../components/EntryCard.astro';import {getCollection} from 'astro:content';
+const entries=(await getCollection('beitraege',({data})=>!data.draft&&data.type==='essay')).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+---
+<Base title="Essays"><div class="content-shell"><header class="page-head"><div class="eyebrow">Längere Formen</div><h1>Essays.</h1><p>Gedanken, die mehr Raum brauchen. Über Geld, Gesellschaft, Technik und Vertrauen.</p></header>{entries.length?entries.map(entry=><EntryCard entry={entry}/>):<p class="empty">Der erste Essay entsteht noch.</p>}</div></Base>

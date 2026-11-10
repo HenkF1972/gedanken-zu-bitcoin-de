@@ -1,0 +1,21 @@
+---
+import '../styles/global.css';
+const { title = 'Gedanken zu Bitcoin', description = 'Ein persönliches Gedankenjournal über Geld, Freiheit und die Fragen dazwischen.' } = Astro.props;
+const currentPath = Astro.url.pathname;
+const nav = [{href:'/',label:'Start'},{href:'/gedanken/',label:'Gedanken'},{href:'/essays/',label:'Essays'},{href:'/ueber/',label:'Über das Journal'}];
+---
+<!doctype html>
+<html lang="de"><head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1"/>
+<meta name="description" content={description}/><meta name="theme-color" content="#f7f3eb"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)}/>
+<title>{title === 'Gedanken zu Bitcoin' ? title : `${title} · Gedanken zu Bitcoin`}</title>
+</head><body>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+<div class="site-wrap"><header class="site-header">
+<a href="/" class="brand" aria-label="Gedanken zu Bitcoin – Startseite">Gedanken zu Bitcoin<span class="brand-dot">.</span><small>Geld. Freiheit. Fragen.</small></a>
+<nav aria-label="Hauptnavigation">{nav.map(n => <a href={n.href} aria-current={currentPath === n.href ? 'page' : undefined}>{n.label}</a>)}</nav>
+</header><main id="inhalt"><slot /></main>
+<footer class="footer"><p>Gedanken zu Bitcoin · Ein persönliches Journal</p><div><a href="/ueber/">Über das Journal</a><a href="/impressum/">Impressum</a><a href="/datenschutz/">Datenschutz</a></div></footer></div>
+</body></html>

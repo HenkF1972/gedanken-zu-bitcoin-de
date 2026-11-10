@@ -1,0 +1,5 @@
+---
+import Base from '../layouts/Base.astro';import EntryCard from '../components/EntryCard.astro';import {getCollection} from 'astro:content';
+const entries=(await getCollection('beitraege',({data})=>!data.draft&&data.type!=='essay')).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+---
+<Base title="Gedanken"><div class="content-shell"><header class="page-head"><div class="eyebrow">Kurze Formen</div><h1>Gedanken.</h1><p>Spontane Beobachtungen, offene Fragen und Ideen, die noch wachsen dürfen.</p></header>{entries.length?entries.map(entry=><EntryCard entry={entry}/>):<p class="empty">Hier erscheinen bald Gedanken.</p>}</div></Base>

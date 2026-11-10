@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://gedanken-zu-bitcoin.de/sitemap-index.xml

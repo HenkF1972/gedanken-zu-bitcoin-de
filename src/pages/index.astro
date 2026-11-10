@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import EntryCard from '../components/EntryCard.astro';
+import {getCollection} from 'astro:content';
+const entries=(await getCollection('beitraege',({data})=>!data.draft)).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+---
+<Base><section class="hero"><div class="eyebrow">Ein persönliches Gedankenjournal</div><h1>Nicht jede Frage braucht sofort eine Antwort.</h1><p>Über Bitcoin, unser Verhältnis zum Geld und darüber, wie neue Ideen unseren Blick auf die Welt verändern.</p></section>
+<div class="content-shell"><div class="section-heading"><h2>Neueste Gedanken</h2><a href="/gedanken/">Alle Gedanken ansehen ↗</a></div>
+{entries.length?entries.map(entry=><EntryCard entry={entry}/>):<p class="empty">Hier erscheinen bald die ersten Gedanken.</p>}</div></Base>
