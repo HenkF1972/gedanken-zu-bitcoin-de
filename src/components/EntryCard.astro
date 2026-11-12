@@ -1,11 +1,12 @@
 ---
 const {entry}=Astro.props;
-const labels={gedanke:'Gedanke',reflexion:'Reflexion',essay:'Essay'};
+const labels={gedanke:'Gedanke',reflexion:'Reflexion',essay:'Essay',zitat:'Zitat'};
 const url=`/beitraege/${entry.id}/`;
 const date=entry.data.date.toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'});
+const isShortForm=entry.data.type==='gedanke'||entry.data.type==='zitat';
 ---
-<article class:list={['entry',entry.data.type==='gedanke' && 'entry--thought']}>
+<article class:list={['entry',isShortForm && 'entry--thought',entry.data.type==='zitat' && 'entry--quote']}>
 <div class="meta"><span>{labels[entry.data.type]}</span><span>·</span><time datetime={entry.data.date.toISOString()}>{date}</time></div>
-{entry.data.type==='gedanke'?<a class="thought-link" href={url}><h2>„{entry.data.title}“</h2></a>:<><h2><a href={url}>{entry.data.title}</a></h2>{entry.data.description&&<p class="excerpt">{entry.data.description}</p>}<a class="read-more" href={url}>Weiterlesen ↗</a></>}
+{isShortForm?<><a class="thought-link" href={url}><h2>„{entry.data.title}“</h2></a>{entry.data.type==='zitat'&&entry.data.autor&&<p class="quote-author">— {entry.data.autor}</p>}</>:<><h2><a href={url}>{entry.data.title}</a></h2>{entry.data.description&&<p class="excerpt">{entry.data.description}</p>}<a class="read-more" href={url}>Weiterlesen ↗</a></>}
 {entry.data.tags.length>0&&<div class="tags">{entry.data.tags.map(tag=><span>{tag}</span>)}</div>}
 </article>
