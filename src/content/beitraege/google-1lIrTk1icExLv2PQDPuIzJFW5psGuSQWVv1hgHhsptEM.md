@@ -1,10 +1,10 @@
 ---
-title: "Essay 01"
+title: "Essay 04"
 date: 2026-11-11
 type: essay
 tags: []
 sourceId: "1lIrTk1icExLv2PQDPuIzJFW5psGuSQWVv1hgHhsptEM"
-draft: true
+draft: false
 ---
 
 ## 1. Stylometrie (Die Handschrift im Satzbau)
@@ -46,3 +46,4 @@ Nummerierte Liste:
 3. Drei
 4. Vier
 5. Fünf
+6. Sechs
