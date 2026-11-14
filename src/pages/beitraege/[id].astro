@@ -5,5 +5,15 @@ export async function getStaticPaths(){const entries=await getCollection('beitra
 const {entry}=Astro.props;const {Content}=await render(entry);
 const label={gedanke:'Gedanke',reflexion:'Reflexion',essay:'Essay',zitat:'Zitat'}[entry.data.type];
 const isQuote=entry.data.type==='zitat';
+const isShortForm=entry.data.type==='gedanke'||isQuote;
 ---
-<Base title={entry.data.title} description={entry.data.description??entry.data.title}><article class:list={['article',isQuote&&'article--quote']}><div class="meta"><span>{label}</span><span>·</span><time datetime={entry.data.date.toISOString()}>{entry.data.date.toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'})}</time></div>{isQuote?<><h1>Zitat</h1><blockquote class="quote-body"><Content/></blockquote>{entry.data.autor&&<p class="quote-author">— {entry.data.autor}</p>}</>:<><h1>{entry.data.title}</h1><div class="article-body"><Content/></div></>}{entry.data.tags.length>0&&<div class="tags">{entry.data.tags.map(tag=><span>{tag}</span>)}</div>}<a class="back-link" href="/">← Zurück zur Startseite</a></article></Base>
+<Base title={entry.data.title} description={entry.data.description??entry.data.title}>
+  <article class:list={['article',isShortForm&&'article--short',isQuote&&'article--quote']}>
+    <div class="meta"><span>{label}</span><span>·</span><time datetime={entry.data.date.toISOString()}>{entry.data.date.toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'})}</time></div>
+    {isShortForm
+      ? <><div class:list={['short-form-body',isQuote&&'quote-body']}><Content/></div>{isQuote&&entry.data.autor&&<p class="quote-author">— {entry.data.autor}</p>}</>
+      : <><h1>{entry.data.title}</h1><div class="article-body"><Content/></div></>}
+    {entry.data.tags.length>0&&<div class="tags">{entry.data.tags.map(tag=><span>{tag}</span>)}</div>}
+    <a class="back-link" href="/">← Zurück zur Startseite</a>
+  </article>
+</Base>
