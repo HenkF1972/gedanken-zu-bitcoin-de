@@ -29,17 +29,58 @@ h1,h2{font-family:Georgia,'Times New Roman',serif;font-weight:400;line-height:1.
 .network-footer .footer-about{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;gap:13px;flex-wrap:nowrap}
 .network-footer .footer-about strong,.network-footer .footer-about p{display:block;margin:0;line-height:1.8}
 
-/* Kurze Zitate: Urheber gut sichtbar, ohne die vorhandenen Gedanken zu verändern */
-.entry--quote .quote-author,.article--quote .quote-author{margin:12px 0 0;color:var(--muted);font-size:14px;line-height:1.6}
-.entry--quote .quote-author{padding-left:22px}
-.article--quote .quote-body{margin:26px 0 0;padding:5px 0 5px 24px;border-left:2px solid var(--accent);font:italic clamp(21px,3vw,30px)/1.7 Georgia,'Times New Roman',serif}
-.article--quote .quote-body p{margin:0 0 .8em}
-.article--quote .quote-body p:last-child{margin-bottom:0}
-.article--quote .quote-author{padding-left:26px}
-
-/* Kurzbeiträge: voller Markdown-Inhalt, kein sichtbarer Metadaten-Titel */
-.entry--thought .short-form-body{margin:16px 0 0;padding:0 0 0 20px;border-left:2px solid var(--accent);font:italic clamp(22px,3vw,30px)/1.55 Georgia,'Times New Roman',serif;overflow-wrap:anywhere}
+/* Kurzbeiträge: vollständig, ohne sichtbare Titel; zwei unterschiedliche Box-Designs */
 .short-form-body p{margin:0 0 .85em}
 .short-form-body p:last-child{margin-bottom:0}
-.article--short .short-form-body{margin-top:26px;font:italic clamp(22px,3vw,30px)/1.7 Georgia,'Times New Roman',serif;overflow-wrap:anywhere}
-.article--short:not(.article--quote) .short-form-body{padding-left:24px;border-left:2px solid var(--accent)}
+
+/* Persönliche Gedanken: helle Papierkarte mit warmem Akzent */
+.entry--thought:not(.entry--quote) .short-form-body,
+.article--short:not(.article--quote) .short-form-body{
+  background:#fffdf8;
+  border:1px solid #e3d8c8;
+  border-left:4px solid var(--accent);
+  border-radius:8px;
+  padding:25px 29px;
+  box-shadow:0 6px 20px rgba(55,40,26,.045);
+  font:normal clamp(19px,2.5vw,25px)/1.65 Georgia,'Times New Roman',serif;
+  overflow-wrap:anywhere;
+}
+
+/* Fremdzitate: abgesetzter warmer Ton, klassische Zitattypografie */
+.entry--quote .short-form-body,
+.article--quote .short-form-body{
+  position:relative;
+  background:#eee5d8;
+  border:1px solid #d9c7b3;
+  border-radius:8px;
+  padding:35px 29px 27px;
+  font:italic clamp(20px,2.6vw,27px)/1.65 Georgia,'Times New Roman',serif;
+  overflow-wrap:anywhere;
+}
+.entry--quote .short-form-body::before,
+.article--quote .short-form-body::before{
+  content:"“";
+  position:absolute;
+  left:17px;
+  top:0;
+  color:var(--accent);
+  opacity:.55;
+  font:56px/1 Georgia,'Times New Roman',serif;
+}
+.entry--quote .quote-author,
+.article--quote .quote-author{
+  margin:13px 6px 0;
+  color:var(--muted);
+  font:14px/1.6 Arial,Helvetica,sans-serif;
+  text-align:right;
+}
+.entry--thought .short-form-body{margin-top:16px}
+.article--short .short-form-body{margin-top:26px}
+@media(max-width:600px){
+  .entry--thought .short-form-body,
+  .article--short .short-form-body{padding:23px 20px}
+  .entry--quote .short-form-body,
+  .article--quote .short-form-body{padding:34px 20px 23px}
+  .entry--quote .short-form-body::before,
+  .article--quote .short-form-body::before{left:10px}
+}
