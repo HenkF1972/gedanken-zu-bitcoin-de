@@ -36,3 +36,10 @@ h1,h2{font-family:Georgia,'Times New Roman',serif;font-weight:400;line-height:1.
 .article--quote .quote-body p{margin:0 0 .8em}
 .article--quote .quote-body p:last-child{margin-bottom:0}
 .article--quote .quote-author{padding-left:26px}
+
+/* Kurzbeiträge: voller Markdown-Inhalt, kein sichtbarer Metadaten-Titel */
+.entry--thought .short-form-body{margin:16px 0 0;padding:0 0 0 20px;border-left:2px solid var(--accent);font:italic clamp(22px,3vw,30px)/1.55 Georgia,'Times New Roman',serif;overflow-wrap:anywhere}
+.short-form-body p{margin:0 0 .85em}
+.short-form-body p:last-child{margin-bottom:0}
+.article--short .short-form-body{margin-top:26px;font:italic clamp(22px,3vw,30px)/1.7 Georgia,'Times New Roman',serif;overflow-wrap:anywhere}
+.article--short:not(.article--quote) .short-form-body{padding-left:24px;border-left:2px solid var(--accent)}
