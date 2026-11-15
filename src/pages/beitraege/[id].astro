@@ -11,7 +11,7 @@ const isShortForm=entry.data.type==='gedanke'||isQuote;
   <article class:list={['article',isShortForm&&'article--short',isQuote&&'article--quote']}>
     <div class="meta"><span>{label}</span><span>·</span><time datetime={entry.data.date.toISOString()}>{entry.data.date.toLocaleDateString('de-DE',{day:'2-digit',month:'long',year:'numeric'})}</time></div>
     {isShortForm
-      ? <><div class:list={['short-form-body',isQuote&&'quote-body']}><Content/></div>{isQuote&&entry.data.autor&&<p class="quote-author">— {entry.data.autor}</p>}</>
+      ? <><div class:list={['short-form-body',isQuote&&'quote-body']}><Content/></div>{isQuote&&entry.data.author&&<p class="quote-author">— {entry.data.author}</p>}</>
       : <><h1>{entry.data.title}</h1><div class="article-body"><Content/></div></>}
     {entry.data.tags.length>0&&<div class="tags">{entry.data.tags.map(tag=><span>{tag}</span>)}</div>}
     <a class="back-link" href="/">← Zurück zur Startseite</a>
