@@ -10,7 +10,7 @@ const {Content}=isShortForm?await render(entry):{Content:null};
 <article class:list={['entry',isShortForm && 'entry--thought',entry.data.type==='zitat' && 'entry--quote']}>
   <div class="meta"><span>{labels[entry.data.type]}</span><span>·</span><time datetime={entry.data.date.toISOString()}>{date}</time></div>
   {isShortForm
-    ? <><div class="short-form-body"><Content/></div>{entry.data.type==='zitat'&&entry.data.autor&&<p class="quote-author">— {entry.data.autor}</p>}</>
+    ? <><div class="short-form-body"><Content/></div>{entry.data.type==='zitat'&&entry.data.author&&<p class="quote-author">— {entry.data.author}</p>}</>
     : <><h2><a href={url}>{entry.data.title}</a></h2>{entry.data.description&&<p class="excerpt">{entry.data.description}</p>}<a class="read-more" href={url}>Weiterlesen ↗</a></>}
   {entry.data.tags.length>0&&<div class="tags">{entry.data.tags.map(tag=><span>{tag}</span>)}</div>}
 </article>
