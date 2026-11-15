@@ -1,5 +1,25 @@
 ---
-import Base from '../layouts/Base.astro';import EntryCard from '../components/EntryCard.astro';import {getCollection} from 'astro:content';
-const entries=(await getCollection('beitraege',({data})=>!data.draft&&data.type!=='essay')).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+import Base from '../layouts/Base.astro';
+import EntryCard from '../components/EntryCard.astro';
+import {getCollection} from 'astro:content';
+
+const sortNewestFirst = (a, b) => {
+  const dayDifference = b.data.date.getTime() - a.data.date.getTime();
+  if (dayDifference !== 0) return dayDifference;
+  const aId = a.data.sourceId;
+  const bId = b.data.sourceId;
+  const aDiscord = typeof aId === 'string' && /^\d{17,20}$/.test(aId);
+  const bDiscord = typeof bId === 'string' && /^\d{17,20}$/.test(bId);
+  if (aDiscord && bDiscord) {
+    const aNumber = BigInt(aId);
+    const bNumber = BigInt(bId);
+    if (aNumber !== bNumber) return bNumber > aNumber ? 1 : -1;
+  } else if (aDiscord !== bDiscord) {
+    return bDiscord ? 1 : -1;
+  }
+  return b.id.localeCompare(a.id);
+};
+
+const entries=(await getCollection('beitraege',({data})=>!data.draft&&data.type!=='essay')).sort(sortNewestFirst);
 ---
 <Base title="Gedanken"><div class="content-shell"><header class="page-head"><div class="eyebrow">Kurze Formen</div><h1>Gedanken.</h1><p>Spontane Beobachtungen, offene Fragen und Ideen, die noch wachsen dürfen.</p></header>{entries.length?entries.map(entry=><EntryCard entry={entry}/>):<p class="empty">Hier erscheinen bald Gedanken.</p>}</div></Base>
