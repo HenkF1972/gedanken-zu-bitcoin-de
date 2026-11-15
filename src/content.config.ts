@@ -3,12 +3,12 @@ import { glob } from 'astro/loaders';
 const beitraege = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/beitraege' }),
   schema: z.object({
-    title: z.string(), description: z.string().optional(),
+    title: z.string().min(1), description: z.string(),
     date: z.coerce.date(), type: z.enum(['gedanke','reflexion','essay','zitat']),
-    tags: z.array(z.string()).default([]),
-    sourceId: z.string().optional(), related: z.array(z.string()).default([]),
-    autor: z.string().optional(),
-    draft: z.boolean().default(false)
+    tags: z.array(z.string()),
+    sourceId: z.string().min(1), related: z.array(z.string()),
+    author: z.string(),
+    draft: z.boolean()
   })
 });
 export const collections = { beitraege };
