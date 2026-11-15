@@ -2,7 +2,27 @@
 import Base from '../layouts/Base.astro';
 import EntryCard from '../components/EntryCard.astro';
 import {getCollection} from 'astro:content';
-const entries=(await getCollection('beitraege',({data})=>!data.draft)).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+
+// Neueste Beiträge zuerst; bei gleichem Kalendertag entscheidet
+// die Discord-Snowflake-ID (enthält den Erstellungszeitpunkt).
+const sortNewestFirst = (a, b) => {
+  const dayDifference = b.data.date.getTime() - a.data.date.getTime();
+  if (dayDifference !== 0) return dayDifference;
+  const aId = a.data.sourceId;
+  const bId = b.data.sourceId;
+  const aDiscord = typeof aId === 'string' && /^\d{17,20}$/.test(aId);
+  const bDiscord = typeof bId === 'string' && /^\d{17,20}$/.test(bId);
+  if (aDiscord && bDiscord) {
+    const aNumber = BigInt(aId);
+    const bNumber = BigInt(bId);
+    if (aNumber !== bNumber) return bNumber > aNumber ? 1 : -1;
+  } else if (aDiscord !== bDiscord) {
+    return bDiscord ? 1 : -1;
+  }
+  return b.id.localeCompare(a.id);
+};
+
+const entries=(await getCollection('beitraege',({data})=>!data.draft)).sort(sortNewestFirst);
 ---
 <Base><section class="hero"><div class="eyebrow">Ein persönliches Gedankenjournal</div><h1>Nicht jede Frage braucht sofort eine Antwort.</h1><p>Über Bitcoin, unser Verhältnis zum Geld und darüber, wie neue Ideen unseren Blick auf die Welt verändern.</p></section>
 <div class="content-shell"><div class="section-heading"><h2>Neueste Gedanken</h2><a href="/gedanken/">Alle Gedanken ansehen ↗</a></div>
